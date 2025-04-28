@@ -5,7 +5,7 @@ updated: "2025-04-28"
 categories:
   - "Hệ thống phân tán"
   - "Distributed Systems"
-coverImage: "/images/he-thong-phan-tan.pngpng"
+coverImage: "/images/he-thong-phan-tan.png"
 coverWidth: 16
 coverHeight: 9
 excerpt: Tìm hiểu về các khái niệm quan trọng trong hệ thống phân tán và ứng dụng của chúng trong bài viết này.
