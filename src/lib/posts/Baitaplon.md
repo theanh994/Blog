@@ -1,7 +1,7 @@
 ---
 title: "Kế hoạch dự án"
 date: "2025-04-29"
-updated: "2025-04-299"
+updated: "2025-04-29"
 categories:
   - "Hệ thống phân tán"
   - "Distributed Systems"
