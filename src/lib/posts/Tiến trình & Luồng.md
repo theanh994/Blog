@@ -69,40 +69,6 @@ Dưới đây là bảng liệt kê các **bài toán phổ biến trong ngành 
 | 11  | Phân tích log                          | Mỗi file log hoặc dòng log xử lý song song                   |
 | 12  | Video streaming platform              | Mỗi client stream video thông qua luồng riêng                |
 
-## So sánh: Khi nào dùng Thread, Process, hoặc cả hai?
-
-| Tiêu chí                 | Dùng **Thread**                                 | Dùng **Process**                                  | Dùng **Cả hai**                                    |
-|--------------------------|--------------------------------------------------|----------------------------------------------------|-----------------------------------------------------|
-| Chia sẻ tài nguyên       | Cần chia sẻ bộ nhớ, biến, tài nguyên nội bộ      | Mỗi tiến trình cần không gian bộ nhớ độc lập        | Mỗi tiến trình chính chứa nhiều thread con         |
-| Hiệu năng                | Tối ưu cho tác vụ nhẹ, không blocking I/O        | Tốt cho các tác vụ tính toán nặng, blocking I/O    | Hệ thống lớn yêu cầu cả khả năng song song và cách ly |
-| Tính ổn định             | Lỗi thread ảnh hưởng toàn bộ tiến trình chính    | Lỗi process không ảnh hưởng các tiến trình khác     | Tăng cường hiệu suất và độ tin cậy                 |
-| Ví dụ                    | Game, ứng dụng UI, chương trình tính toán nhẹ    | Huấn luyện AI, phân tích dữ liệu lớn, crawling      | Hệ thống microservices, webserver phức hợp         |
-
-> ✅ **Gợi ý thực hành:** Có thể viết bảng này ra giấy, chụp lại để nộp đúng yêu cầu bài tập.
-
-## Hệ thống phân tán trong ChatGPT Training
-
-Mô hình như **ChatGPT** được huấn luyện bằng hệ thống phân tán cực lớn để xử lý hàng tỷ tham số, dữ liệu và yêu cầu đồng thời.
-
-### Các công nghệ và phương pháp sử dụng:
-
-- **Data Parallelism:** Chia tập dữ liệu ra nhiều máy để xử lý cùng lúc.
-- **Model Parallelism:** Chia mô hình lớn thành nhiều phần chạy trên nhiều GPU.
-- **Pipeline Parallelism:** Các tầng mạng chạy nối tiếp qua các GPU khác nhau.
-- **Distributed Training Frameworks:** Sử dụng **DeepSpeed**, **Megatron-LM**, **Ray**, hoặc **Horovod** để tối ưu hiệu năng.
-
-### Ví dụ kiến trúc phần cứng:
-
-- GPU: NVIDIA A100 hoặc V100
-- Hạ tầng: Hàng trăm/thậm chí hàng ngàn node (máy chủ), kết nối tốc độ cao
-- Bộ nhớ: Mỗi node có RAM từ 128GB trở lên
-
-### Nguồn tham khảo:
-
-- [Hugging Face - LLMs Scaling](https://huggingface.co/blog/large-language-models)
-- [Google Research - PaLM Paper](https://arxiv.org/abs/2205.05198)
-- [Microsoft Research - DeepSpeed](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/)
-
 
 ## Khi nào nên dùng Thread, Process, hoặc cả hai?
 
