@@ -1,4 +1,3 @@
-
 ---
 title: "Phân tích hiệu năng máy tính cá nhân dựa trên bài học Hệ thống phân tán"
 date: "2025-05-05"
