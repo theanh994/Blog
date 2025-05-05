@@ -99,25 +99,51 @@ Dưới đây là **bảng phân tích chi tiết**, bao gồm mô tả kỹ thu
 - **Thread-per-connection / Thread-per-object:** phù hợp cho hệ thống có trạng thái lâu dài (VD: chat app, payment service).
 
 
-## Hệ thống phân tán trong ChatGPT Training
+## Hệ thống phân tán trong quá trình huấn luyện ChatGPT
 
-Mô hình như **ChatGPT** được huấn luyện bằng hệ thống phân tán cực lớn để xử lý hàng tỷ tham số, dữ liệu và yêu cầu đồng thời.
+Mô hình như **ChatGPT** là một dạng **Large Language Model (LLM)** có hàng trăm tỷ tham số, đòi hỏi tài nguyên khổng lồ để huấn luyện. Để xử lý hiệu quả khối lượng tính toán và dữ liệu này, OpenAI (và các tổ chức nghiên cứu khác) sử dụng hệ thống phân tán (distributed systems) với hàng ngàn GPU hiệu suất cao được kết nối chặt chẽ.
 
-### Các công nghệ và phương pháp sử dụng:
+### 1. Tại sao cần hệ thống phân tán?
 
-- **Data Parallelism:** Chia tập dữ liệu ra nhiều máy để xử lý cùng lúc.
-- **Model Parallelism:** Chia mô hình lớn thành nhiều phần chạy trên nhiều GPU.
-- **Pipeline Parallelism:** Các tầng mạng chạy nối tiếp qua các GPU khác nhau.
-- **Distributed Training Frameworks:** Sử dụng **DeepSpeed**, **Megatron-LM**, **Ray**, hoặc **Horovod** để tối ưu hiệu năng.
+- **Kích thước mô hình lớn**: Ví dụ, GPT-3 có 175 tỷ tham số; GPT-4 còn lớn hơn nữa. Một GPU không đủ bộ nhớ để chứa toàn bộ mô hình.
+- **Khối lượng dữ liệu khổng lồ**: Dữ liệu huấn luyện lên đến hàng trăm TB văn bản.
+- **Thời gian huấn luyện**: Nếu chỉ dùng 1 máy, việc huấn luyện có thể mất... hàng năm trời. Hệ thống phân tán giúp rút ngắn xuống vài tuần hoặc vài ngày.
 
-### Ví dụ kiến trúc phần cứng:
+### 2. Các chiến lược phân tán mô hình (Model Distribution Strategies)
 
-- GPU: NVIDIA A100 hoặc V100
-- Hạ tầng: Hàng trăm/thậm chí hàng ngàn node (máy chủ), kết nối tốc độ cao
-- Bộ nhớ: Mỗi node có RAM từ 128GB trở lên
+| Chiến lược                | Mô tả                                                                                 |
+|---------------------------|----------------------------------------------------------------------------------------|
+| **Data Parallelism**      | Mỗi máy giữ một bản sao mô hình, xử lý **batch dữ liệu khác nhau**, sau đó tổng hợp gradient. |
+| **Model Parallelism**     | Mô hình quá lớn để nằm gọn trong một GPU → chia mô hình thành nhiều phần và phân tán cho nhiều GPU. |
+| **Pipeline Parallelism**  | Mỗi tầng (layer) của mạng neuron nằm trên một GPU khác nhau → dữ liệu truyền theo pipeline. |
+| **Tensor/Operator Sharding** | Phân chia tensor hoặc các phép toán trong mô hình thành nhiều mảnh nhỏ xử lý song song. |
 
-### Nguồn tham khảo:
+### 3. Công nghệ và công cụ hỗ trợ
 
-- [Hugging Face - LLMs Scaling](https://huggingface.co/blog/large-language-models)
-- [Google Research - PaLM Paper](https://arxiv.org/abs/2205.05198)
-- [Microsoft Research - DeepSpeed](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/)
+- **NVIDIA NCCL**
+- **PyTorch Distributed**, **TensorFlow XLA**
+- **DeepSpeed** (Microsoft)
+- **Megatron-LM** (NVIDIA)
+- **Ray, Horovod**
+
+### 4. Hạ tầng phần cứng (Infrastructure)
+
+- **GPU**: NVIDIA A100 hoặc V100
+- **Mạng**: Băng thông cao, độ trễ thấp
+- **Storage**: Ceph, S3 hoặc các hệ thống lưu trữ phân tán
+
+> GPT-3 được huấn luyện trên hệ thống với **>3000 GPU A100**, tổng cộng ~10,000 Petaflops trong suốt hàng tuần.
+
+### 5. Các thách thức
+
+- Đồng bộ hóa gradient
+- Ổn định hệ thống
+- Tối ưu bộ nhớ GPU
+
+### 6. Tài liệu tham khảo
+
+- [Hugging Face – LLMs Scaling](https://huggingface.co/blog/large-language-models)
+- [PaLM: Scaling Language Models (Google)](https://arxiv.org/abs/2205.05198)
+- [DeepSpeed Blog (Microsoft)](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/)
+- [Megatron-LM (NVIDIA)](https://github.com/NVIDIA/Megatron-LM)
+"""
