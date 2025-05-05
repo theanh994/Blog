@@ -1,60 +1,54 @@
 ---
-title: "Khái niệm về Hệ thống phân tán"
-date: "2025-04-28"
-updated: "2025-04-28"
+title: "Phân tích hiệu năng máy tính cá nhân dựa trên bài học Hệ thống phân tán"
+date: "2025-05-05"
+updated: "2025-05-05"
 categories:
   - "Hệ thống phân tán"
   - "Distributed Systems"
-coverImage: "/images/he-thong-phan-tan.png"
+coverImage: "/images/Aser.png"
 coverWidth: 16
 coverHeight: 9
-excerpt: Tìm hiểu về các khái niệm quan trọng trong hệ thống phân tán và ứng dụng của chúng trong bài viết này.
+excerpt: Bài viết này phân tích cấu hình máy tính cá nhân sử dụng CPU Intel i5-11400H, GPU RTX 1650 và RAM 16GB, liên hệ đến hiệu năng khi học và thực hành hệ thống phân tán.
 ---
 
-## Hệ thống phân tán là gì?
+## Cấu hình phần cứng máy tính
 
-Hệ thống phân tán là một hệ thống bao gồm nhiều máy tính hoặc các thiết bị khác nhau, được kết nối qua mạng, làm việc cùng nhau để thực hiện một nhiệm vụ chung.
+Máy tính sử dụng trong bài viết này là **Acer Nitro AN515-45**, với cấu hình như sau:
 
-### Các ứng dụng của hệ thống phân tán
+- **CPU:** Intel Core i5-11400H (6 nhân, 12 luồng, 2.7GHz – 4.5GHz)
+- **GPU:** NVIDIA GeForce RTX 1650 4GB GDDR6
+- **RAM:** 16GB DDR4
 
-Hệ thống phân tán được ứng dụng rộng rãi trong nhiều lĩnh vực:
+Người dùng có thể kiểm tra thông tin chi tiết bằng các công cụ như:
+- `Task Manager` (tab Performance)
+- `dxdiag`
+- `msinfo32`
 
-- **Hệ thống quản lý cơ sở dữ liệu phân tán**: Ví dụ như MongoDB, Cassandra.
-- **Dịch vụ đám mây**: AWS, Google Cloud, Microsoft Azure.
-- **Mạng xã hội**: Facebook, Twitter, nơi có hàng triệu người dùng kết nối và trao đổi dữ liệu.
-- **Streaming video**: Netflix, YouTube, nơi các video được phân phối trên toàn cầu.
+## Phân tích hiệu năng theo kiến thức Hệ thống phân tán
 
-### Các khái niệm chính của hệ thống phân tán
+Dựa trên kiến thức từ bài học về hệ thống phân tán, ta có thể phân tích các yếu tố sau:
 
-#### Scalability
+### CPU – Khả năng xử lý song song
 
-Scalability (Khả năng mở rộng) là khả năng của hệ thống phân tán trong việc xử lý lượng công việc gia tăng bằng cách thêm tài nguyên.
+- Bộ xử lý **Intel Core i5-11400H** với 6 nhân 12 luồng hỗ trợ **đa luồng (multithreading)** tốt.
+- Phù hợp với các mô hình server-client, hệ thống đa tiến trình, hoặc ứng dụng cần xử lý đồng thời nhiều yêu cầu.
 
-#### Fault Tolerance
+### GPU – Tăng tốc xử lý tính toán
 
-Fault tolerance (Khả năng chịu lỗi) là khả năng của hệ thống tiếp tục hoạt động ngay cả khi có một hoặc nhiều thành phần gặp sự cố.
+- **RTX 1650** tuy không phải dòng cao cấp, nhưng vẫn có thể hỗ trợ các bài toán tính toán song song (nếu học CUDA hoặc các thư viện liên quan).
+- Hữu ích khi mô phỏng hệ thống phân tán có giao diện đồ họa, xử lý dữ liệu lớn hoặc thị giác máy tính.
 
-#### Availability
+### RAM – Đáp ứng cho môi trường thực hành
 
-Availability (Khả năng sẵn sàng) đề cập đến thời gian mà hệ thống phân tán có thể đáp ứng yêu cầu của người dùng.
+- **16GB RAM** đủ dùng cho việc chạy đồng thời nhiều tiến trình, máy ảo, container (Docker), hoặc các công cụ mô phỏng môi trường phân tán.
+- Giảm nguy cơ nghẽn bộ nhớ khi làm việc với hệ thống nhiều node.
 
-#### Transparency
+## Kết luận
 
-Transparency (Tính minh bạch) là khả năng của hệ thống giấu đi sự phức tạp của các thành phần vật lý từ người dùng.
+Với cấu hình như trên, máy tính hoàn toàn đáp ứng tốt cho việc:
 
-#### Concurrency & Parallelism
+- Học và thực hành các mô hình hệ thống phân tán
+- Viết và chạy chương trình đa tiến trình, socket, hoặc client-server
+- Mô phỏng và triển khai microservices hoặc mô hình phân tán nhỏ
 
-- **Concurrency**: Là khả năng thực hiện nhiều tác vụ đồng thời, nhưng không nhất thiết phải cùng lúc.
-- **Parallelism**: Là khả năng xử lý nhiều tác vụ trong cùng một thời điểm.
-
-### Ví dụ về hệ thống phân tán
-
-Một ví dụ điển hình của hệ thống phân tán là **Google Search**. Google sử dụng hàng triệu máy tính để xử lý dữ liệu tìm kiếm của người dùng trên toàn cầu.
-
-### Kiến trúc của hệ thống phân tán
-
-Hệ thống phân tán có thể sử dụng nhiều mô hình kiến trúc khác nhau:
-
-- **Client-Server**: Mô hình phổ biến trong nhiều ứng dụng như web và cơ sở dữ liệu.
-- **Peer-to-Peer**: Mỗi thành phần trong hệ thống có thể hoạt động như một máy chủ và một client.
-- **Microservices**: Mô hình kiến trúc hiện đại trong các ứng dụng phân tán, nơi các dịch vụ hoạt động độc lập với nhau.
+Đây là một lựa chọn phù hợp cho sinh viên ngành Công nghệ thông tin hoặc người mới bắt đầu học về hệ thống phân tán.
