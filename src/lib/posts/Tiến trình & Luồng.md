@@ -97,52 +97,119 @@ Dưới đây là **bảng phân tích chi tiết**, bao gồm mô tả kỹ thu
 - **Thread-per-request:** tối đa hóa băng thông, nhưng tiêu tốn tài nguyên nếu số lượng request lớn.
 - **Thread-per-connection / Thread-per-object:** phù hợp cho hệ thống có trạng thái lâu dài (VD: chat app, payment service).
 
+## Cách ChatGPT được huấn luyện bằng hệ thống phân tán (Distributed System)
 
 ## Hệ thống phân tán trong quá trình huấn luyện ChatGPT
 
-Mô hình như **ChatGPT** là một dạng **Large Language Model (LLM)** có hàng trăm tỷ tham số, đòi hỏi tài nguyên khổng lồ để huấn luyện. Để xử lý hiệu quả khối lượng tính toán và dữ liệu này, OpenAI (và các tổ chức nghiên cứu khác) sử dụng hệ thống phân tán (distributed systems) với hàng ngàn GPU hiệu suất cao được kết nối chặt chẽ.
+Việc huấn luyện ChatGPT (đặc biệt là GPT-3, GPT-4) đòi hỏi xử lý khối lượng dữ liệu và tham số khổng lồ, dẫn đến yêu cầu cao về hiệu suất phân tán.
 
-### 1. Tại sao cần hệ thống phân tán?
+### 1. Mục tiêu của huấn luyện phân tán
 
-- **Kích thước mô hình lớn**: Ví dụ, GPT-3 có 175 tỷ tham số; GPT-4 còn lớn hơn nữa. Một GPU không đủ bộ nhớ để chứa toàn bộ mô hình.
-- **Khối lượng dữ liệu khổng lồ**: Dữ liệu huấn luyện lên đến hàng trăm TB văn bản.
-- **Thời gian huấn luyện**: Nếu chỉ dùng 1 máy, việc huấn luyện có thể mất... hàng năm trời. Hệ thống phân tán giúp rút ngắn xuống vài tuần hoặc vài ngày.
+- **Mô hình lớn:** GPT-3 có 175B tham số, GPT-4 thậm chí còn lớn hơn.
+- **Dữ liệu huấn luyện cực lớn:** hàng trăm terabyte văn bản.
+- **Thời gian huấn luyện:** hàng tuần, hàng ngàn GPU đồng thời.
 
-### 2. Các chiến lược phân tán mô hình (Model Distribution Strategies)
+---
 
-| Chiến lược                | Mô tả                                                                                 |
-|---------------------------|----------------------------------------------------------------------------------------|
-| **Data Parallelism**      | Mỗi máy giữ một bản sao mô hình, xử lý **batch dữ liệu khác nhau**, sau đó tổng hợp gradient. |
-| **Model Parallelism**     | Mô hình quá lớn để nằm gọn trong một GPU → chia mô hình thành nhiều phần và phân tán cho nhiều GPU. |
-| **Pipeline Parallelism**  | Mỗi tầng (layer) của mạng neuron nằm trên một GPU khác nhau → dữ liệu truyền theo pipeline. |
-| **Tensor/Operator Sharding** | Phân chia tensor hoặc các phép toán trong mô hình thành nhiều mảnh nhỏ xử lý song song. |
+### 2. Data Parallelism
 
-### 3. Công nghệ và công cụ hỗ trợ
+#### Mô tả
+- Mỗi node (GPU/máy) giữ một bản sao đầy đủ của mô hình.
+- Dữ liệu được chia thành các phần nhỏ (mini-batch).
+- Các node thực hiện tính toán trên batch riêng của mình.
 
-- **NVIDIA NCCL**
-- **PyTorch Distributed**, **TensorFlow XLA**
-- **DeepSpeed** (Microsoft)
-- **Megatron-LM** (NVIDIA)
-- **Ray, Horovod**
+#### Ưu điểm
+- Dễ triển khai.
+- Phù hợp khi mô hình vừa với VRAM GPU.
 
-### 4. Hạ tầng phần cứng (Infrastructure)
+#### Nhược điểm
+- Tăng giao tiếp khi số GPU tăng.
+- Gradient đồng bộ cần tối ưu bằng **NCCL** hoặc **AllReduce**.
 
-- **GPU**: NVIDIA A100 hoặc V100
-- **Mạng**: Băng thông cao, độ trễ thấp
-- **Storage**: Ceph, S3 hoặc các hệ thống lưu trữ phân tán
+---
 
-> GPT-3 được huấn luyện trên hệ thống với **>3000 GPU A100**, tổng cộng ~10,000 Petaflops trong suốt hàng tuần.
+### 3. Model Parallelism
 
-### 5. Các thách thức
+#### Mô tả
+- Mô hình quá lớn → chia mô hình theo chiều dọc (layers) hoặc chiều rộng (tensors).
 
-- Đồng bộ hóa gradient
-- Ổn định hệ thống
-- Tối ưu bộ nhớ GPU
+#### Tensor Parallelism:
+- Chia ma trận nhân, ví dụ A x B = C → chia A và B theo hàng/cột.
+- Dùng Megatron-LM hoặc DeepSpeed.
 
-### 6. Tài liệu tham khảo
+#### Ưu điểm
+- Cho phép xử lý mô hình cực lớn.
 
-- [Hugging Face – LLMs Scaling](https://huggingface.co/blog/large-language-models)
-- [PaLM: Scaling Language Models (Google)](https://arxiv.org/abs/2205.05198)
-- [DeepSpeed Blog (Microsoft)](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/)
-- [Megatron-LM (NVIDIA)](https://github.com/NVIDIA/Megatron-LM)
-"""
+#### Nhược điểm
+- Cần lập kế hoạch pipeline phức tạp.
+- Giao tiếp nhiều giữa GPU.
+
+---
+
+### 4. Hybrid Parallelism – ZeRO
+
+#### Khái niệm
+- Kết hợp Data + Model + Optimizer State partitioning.
+
+#### Ưu điểm
+- Tiết kiệm VRAM 10–15 lần.
+- Tăng khả năng huấn luyện mô hình 10B+ trên 1–4 GPU.
+
+#### Công cụ
+- DeepSpeed (Microsoft)
+- Megatron-DeepSpeed
+- FairScale (Meta)
+
+---
+
+### 5. RLHF (Reinforcement Learning from Human Feedback)
+
+#### Quy trình 3 giai đoạn:
+1. **Supervised Fine-tuning**
+2. **Training Reward Model** (từ so sánh giữa nhiều câu trả lời)
+3. **Huấn luyện với PPO** – cập nhật policy model dựa trên feedback.
+
+#### Kỹ thuật phân tán đi kèm
+- Reward model & policy chạy trên các cụm GPU riêng.
+- Tối ưu với Ray, DeepSpeed Actor/Critic.
+
+#### Khó khăn:
+- Đồng bộ trạng thái.
+- So sánh feedback theo thời gian thực.
+
+---
+
+## 6. Hạ tầng và Công cụ
+
+### Ray
+
+- Framework phân tán task.
+- Quản lý GPU, lại nhiệm task khi thất bại.
+
+### DeepSpeed
+
+- Thư viện tối ưu hoá huấn luyện mô hình lớn.
+- Hỗ trợ ZeRO, pipeline, gradient checkpointing.
+
+---
+
+## 7. Hạ tầng vật lý
+
+- Các supercomputer do Microsoft xây dựng.
+- GPU NVIDIA A100 (tối đa 40/80GB VRAM).
+- Kết nối bằng NVLink, InfiniBand.
+- Hệ thống làm mát dùng nước quy mô lớn.
+
+---
+
+## 8. Tài liệu tham khảo
+
+| Nội dung             | Liên kết                                                                                                                                                                                                                                     |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Kiến trúc GPT        | [https://www.geeksforgeeks.org/chatgpts-architecture](https://www.geeksforgeeks.org/chatgpts-architecture)                                                                                                                                   |
+| Ray + ChatGPT        | [https://www.analyticsinsight.net/artificial-intelligence/how-does-ray-a-distributed-ai-system-powers-openais-chatgpt](https://www.analyticsinsight.net/artificial-intelligence/how-does-ray-a-distributed-ai-system-powers-openais-chatgpt) |
+| RLHF chi tiết        | [https://arxiv.org/abs/2312.11819](https://arxiv.org/abs/2312.11819)                                                                                                                                                                         |
+| DeepSpeed Chat       | [https://arxiv.org/abs/2308.01320](https://arxiv.org/abs/2308.01320)                                                                                                                                                                         |
+| Guide huấn luyện GPT | [https://github.com/MahdiSheikhi/ChatGPT-Training-Guide](https://github.com/MahdiSheikhi/ChatGPT-Training-Guide)                                                                                                                             |
+
+---
