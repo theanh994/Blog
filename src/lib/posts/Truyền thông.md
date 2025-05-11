@@ -1,5 +1,5 @@
 ---
-title: "Bài tập 1 – Tìm hiểu RabbitMQ"
+title: "Tìm hiểu RabbitMQ"
 date: "2025-05-11"
 updated: "2025-05-11"
 categories:
