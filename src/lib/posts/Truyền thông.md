@@ -203,3 +203,124 @@ Nhập một thông điệp bất kỳ và xem kết quả ở cửa sổ consum
 ![Mô phỏng kết quả](./images/ketqua-rabbitmq.png)
 
 ---
+# BÀI TẬP 3 – RPC SỬ DỤNG JSON-RPC VỚI PYTHON
+
+---
+
+## Mô tả bài tập
+> Tìm hiểu và triển khai một trong các thư viện RPC sử dụng định dạng JSON, bao gồm các bước cài đặt và viết mã mẫu cho server và client.
+
+---
+
+## Dịch vụ được chọn: **JSON-RPC**
+
+**JSON-RPC** là một giao thức RPC nhẹ, sử dụng định dạng JSON để truyền tải thông điệp giữa client và server. JSON-RPC có thể được sử dụng để thực hiện các cuộc gọi thủ tục từ xa trong các hệ thống phân tán.
+
+---
+
+## Kiến trúc tổng quan
+
+Quy trình sử dụng JSON-RPC giữa client và server như sau:
+
+- **Client** gửi yêu cầu JSON-RPC tới **Server**.
+- **Server** nhận và xử lý yêu cầu, trả về kết quả dưới dạng JSON-RPC.
+
+```plaintext
+Client --> JSON-RPC Request --> Server --> JSON-RPC Response --> Client
+```
+
+---
+
+## Cơ chế hoạt động
+
+* **Method**: Phương thức được gọi từ client.
+* **Params**: Tham số cần thiết cho phương thức.
+* **ID**: ID của yêu cầu, dùng để đối chiếu phản hồi.
+
+Ví dụ yêu cầu JSON-RPC:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "add",
+  "params": [5, 7],
+  "id": 1
+}
+```
+
+Server sẽ trả về kết quả dưới dạng JSON tương ứng.
+
+---
+
+## Cài đặt thư viện `jsonrpclib-pelix`
+
+### Bước 1: Cài đặt thư viện
+
+Sử dụng pip để cài đặt thư viện `jsonrpclib-pelix`:
+
+```bash
+pip install jsonrpclib-pelix
+```
+
+### Bước 2: Code server (server.py)
+
+Tạo file `server.py` với nội dung sau:
+
+```python
+from jsonrpclib.SimpleJSONRPCServer import SimpleJSONRPCServer
+
+def add(x, y):
+    return x + y
+
+server = SimpleJSONRPCServer(('localhost', 7000))
+server.register_function(add, 'add')
+print("Server đang chạy tại cổng 7000...")
+server.serve_forever()
+```
+
+### Bước 3: Code client (client.py)
+
+Tạo file `client.py` với nội dung sau:
+
+```python
+import jsonrpclib
+
+proxy = jsonrpclib.Server('http://localhost:7000')
+result = proxy.add(3, 4)
+print("Kết quả:", result)
+```
+
+---
+
+## Kiểm tra hoạt động
+
+1. Chạy server:
+
+```bash
+python server.py
+```
+
+2. Chạy client:
+
+```bash
+python client.py
+```
+
+Kết quả mong đợi:
+
+```
+Kết quả: 7
+```
+
+---
+
+## Kết luận
+
+**JSON-RPC** là một giao thức nhẹ, đơn giản và hiệu quả cho các ứng dụng phân tán, với các thư viện Python như `jsonrpclib-pelix` giúp dễ dàng triển khai hệ thống RPC. Việc triển khai JSON-RPC giúp hệ thống giao tiếp linh hoạt và mở rộng được khả năng kết nối giữa các tiến trình và hệ thống.
+
+---
+
+## Tài liệu tham khảo
+
+* [https://www.jsonrpc.org](https://www.jsonrpc.org)
+* [https://github.com/pelix-project/jsonrpclib-pelix](https://github.com/pelix-project/jsonrpclib-pelix)
