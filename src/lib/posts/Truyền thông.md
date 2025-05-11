@@ -200,7 +200,7 @@ Nhập một thông điệp bất kỳ và xem kết quả ở cửa sổ consum
 
 - Gửi được thông điệp từ producer → queue RabbitMQ.
 - Consumer nhận và hiển thị thông điệp ngay lập tức.
-![Mô phỏng kết quả](./images/ketqua-rabbitmq.png)
+![Mô phỏng kết quả](/images/ketqua-rabbitmq.png)
 
 ---
 # BÀI TẬP 3 – RPC SỬ DỤNG JSON-RPC VỚI PYTHON
