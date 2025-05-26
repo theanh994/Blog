@@ -473,7 +473,7 @@ Mô hình **Client-Server** (Khách – Chủ) là một mô hình kiến trúc 
 
 Mô hình này phân tách rõ ràng giữa phần yêu cầu dịch vụ và phần cung cấp dịch vụ, giúp hệ thống có thể mở rộng, bảo trì dễ dàng và quản lý hiệu quả.
 
-# Vai trò của máy chủ và máy khách
+### Vai trò của máy chủ và máy khách
 
 | Thành phần | Vai trò chính |
 |------------|--------------|
@@ -501,9 +501,132 @@ Mô hình này phân tách rõ ràng giữa phần yêu cầu dịch vụ và ph
 - Ẩn đi chi tiết về mạng và truyền thông giữa các hệ thống.
 - Hỗ trợ xây dựng các ứng dụng phân tán phức tạp một cách đơn giản hơn.
 
-## Thách thức khi sử dụng RPC:
+### Thách thức khi sử dụng RPC:
 
 - Xử lý lỗi mạng (mất gói, trễ,...)
 - Đồng bộ hoặc bất đồng bộ trong giao tiếp
 - Đảm bảo tính nhất quán và an toàn trong môi trường phân tán
+
+## Câu 13: Nêu mục đích và lợi ích của mô hình phân tầng giao thức, hướng thông điệp bền vững
+
+### Mục đích và lợi ích của mô hình phân tầng giao thức
+
+### Mục đích:
+
+Mô hình phân tầng giao thức (protocol layering model) được xây dựng nhằm:
+
+* **Tổ chức rõ ràng** các chức năng trong truyền thông mạng.
+* **Phân tách trách nhiệm** giữa các tầng (layer), giúp dễ dàng thiết kế, bảo trì và phát triển hệ thống.
+* **Chuẩn hóa giao tiếp** giữa các thiết bị và hệ thống khác nhau.
+* **Tạo khả năng mở rộng**: thay đổi ở tầng này không ảnh hưởng đến tầng khác nếu tuân thủ đúng giao diện.
+
+Ví dụ:
+
+Hai mô hình phổ biến là **OSI** (7 tầng) và **TCP/IP** (4 tầng).
+
+Lợi ích:
+
+| Lợi ích                         | Mô tả                                                       |
+| ------------------------------- | ----------------------------------------------------------- |
+| **Tính mô-đun (Modularity)**    | Mỗi tầng có chức năng riêng biệt, dễ quản lý và thay thế.   |
+| **Tính độc lập (Independence)** | Tầng cao không cần biết cách tầng dưới hoạt động chi tiết.  |
+| **Dễ dàng chuẩn hóa**           | Giao thức có thể được định nghĩa rõ ràng và thống nhất.     |
+| **Dễ phát triển và bảo trì**    | Lỗi dễ truy vết hơn vì từng tầng độc lập.                   |
+| **Tái sử dụng**                 | Các tầng có thể tái sử dụng trong nhiều hệ thống khác nhau. |
+
+Hướng thông điệp bền vững trong mô hình phân tầng
+
+**Thông điệp bền vững (reliable message delivery)** là một trong các tiêu chí quan trọng trong thiết kế hệ thống phân tán.
+
+### Cách mô hình phân tầng hỗ trợ truyền thông bền vững:
+
+* **Tầng vận chuyển (Transport Layer)** trong mô hình TCP/IP (hoặc OSI) thường đảm nhận vai trò **đảm bảo độ tin cậy**:
+
+  * **TCP**: đảm bảo truyền tin có kiểm soát lỗi, kiểm soát luồng, phân mảnh và sắp xếp lại gói tin.
+  * **UDP**: không đảm bảo độ tin cậy, dùng cho các ứng dụng cần tốc độ cao hơn độ chính xác (như streaming).
+
+### Lợi ích của hướng truyền thông bền vững:
+
+* Đảm bảo dữ liệu không bị mất, bị trùng lặp hoặc sai lệch.
+* Giúp các hệ thống phân tán giao tiếp chính xác và hiệu quả.
+* Quan trọng trong các ứng dụng tài chính, y tế, hệ thống điều khiển phân tán,...
+
+## Câu 14: Sharding là gì
+
+Sharding là một kỹ thuật trong cơ sở dữ liệu và hệ thống phân tán dùng để chia nhỏ dữ liệu thành các phần (shard), mỗi phần được lưu trữ trên một máy chủ hoặc nút riêng biệt nhằm cải thiện hiệu năng, khả năng mở rộng và khả năng chịu lỗi.
+### Cách hoạt động:
+
+- Thay vì lưu toàn bộ dữ liệu trên một máy chủ, hệ thống chia nhỏ dữ liệu dựa trên một tiêu chí nhất định, như:
+  - Giá trị khóa chính (user ID, region ID,...)
+  - Băm (hash) của dữ liệu
+  - Phân vùng theo thời gian
+
+Mỗi shard chứa một phần của dữ liệu và hoạt động độc lập.
+
+### Lợi ích của Sharding:
+
+| Lợi ích | Mô tả |
+|--------|-------|
+| **Khả năng mở rộng cao** | Có thể thêm nhiều shard để chứa dữ liệu mới khi cần. |
+| **Tăng hiệu suất** | Các truy vấn được phân tán, tránh quá tải một máy chủ. |
+| **Chịu lỗi tốt hơn** | Nếu một shard gặp sự cố, các shard khác vẫn hoạt động. |
+| **Quản lý dữ liệu lớn hiệu quả** | Hệ thống dễ quản lý hơn khi dữ liệu được phân chia. |
+
+---
+
+### Thách thức:
+
+- **Phức tạp trong thiết kế**: cần xác định cách chia shard hợp lý.
+- **Khó bảo trì và backup**: nhiều shard cần được quản lý đồng bộ.
+- **Vấn đề khi join dữ liệu giữa các shard**: có thể chậm hoặc phức tạp.
+
+## Câu 15: Các gói luồng có thế làm những nhiệm vụ gì?
+
+Các **gói luồng** (thread packages hoặc thread libraries) là các thư viện/phần mềm hỗ trợ việc **tạo, quản lý và đồng bộ hóa luồng (thread)** trong một chương trình. Chúng cung cấp một giao diện lập trình cho việc sử dụng luồng trên các hệ điều hành khác nhau.
+
+
+### Các nhiệm vụ chính mà các gói luồng có thể thực hiện:
+
+| Nhiệm vụ | Mô tả |
+|----------|-------|
+| **Tạo luồng (Thread creation)** | Cho phép tạo và khởi động luồng mới để thực thi một đoạn mã đồng thời. |
+| **Kết thúc luồng (Thread termination)** | Cho phép luồng kết thúc sau khi hoàn thành công việc hoặc bị hủy bởi chương trình. |
+| **Chờ luồng kết thúc (Thread join)** | Cho phép một luồng đợi đến khi luồng khác hoàn thành để tiếp tục. |
+| **Đồng bộ hóa (Synchronization)** | Cung cấp cơ chế như mutex, semaphore, barrier để tránh tranh chấp tài nguyên dùng chung giữa các luồng. |
+| **Quản lý trạng thái luồng** | Hỗ trợ chuyển luồng giữa các trạng thái: chạy, chờ, bị khóa,... |
+| **Ưu tiên và lập lịch (Scheduling)** | Một số gói hỗ trợ đặt mức ưu tiên cho luồng và kiểm soát lịch trình thực thi. |
+| **Giao tiếp giữa các luồng** | Hỗ trợ trao đổi dữ liệu giữa luồng thông qua biến dùng chung hoặc hàng đợi (queue). |
+| **Hủy luồng (Thread cancellation)** | Hỗ trợ dừng một luồng trong trường hợp cần thiết, có thể là tức thời hoặc an toàn. |
+
+---
+
+### Một số gói luồng phổ biến:
+
+| Gói luồng | Nền tảng | Đặc điểm |
+|-----------|----------|----------|
+| **POSIX Threads (pthreads)** | Unix/Linux | Chuẩn POSIX, mạnh mẽ, dùng phổ biến trong C/C++. |
+| **Java Threads** | Java | Tích hợp trong JVM, dễ dùng, hỗ trợ đa luồng. |
+| **C++ std::thread** | C++11+ | Chuẩn hóa quản lý luồng trong C++. |
+| **OpenMP** | C/C++/Fortran | Tập trung vào lập trình song song chia sẻ bộ nhớ. |
+| **.NET Threads / Tasks** | .NET | Hỗ trợ lập trình đa luồng trong C#, F#, VB.NET. |
+| **Python threading** | Python | Dễ dùng, nhưng bị giới hạn bởi GIL (Global Interpreter Lock). |
+
+## Câu 16: Phân loại sự khác nhau giữa luồng kiểu người dùng và luồng kiểu nhân
+
+Trong hệ điều hành, **luồng (thread)** có thể được triển khai theo hai cách phổ biến:
+
+- **Luồng kiểu người dùng (User-level Thread - ULT)**
+- **Luồng kiểu nhân (Kernel-level Thread - KLT)**
+
+### So sánh:
+
+| Tiêu chí | Luồng kiểu người dùng (ULT) | Luồng kiểu nhân (KLT) |
+|----------|------------------------------|-------------------------|
+| **Quản lý bởi** | Thư viện ở không gian người dùng | Hệ điều hành (kernel) |
+| **Tốc độ chuyển đổi** | Nhanh (vì không cần gọi hệ thống) | Chậm hơn do phải chuyển sang kernel mode |
+| **Khả năng tùy biến** | Dễ tùy chỉnh lịch trình bởi lập trình viên | Do hệ điều hành quyết định |
+| **Tương tác với HĐH** | HĐH không biết về các ULT | HĐH quản lý toàn bộ KLT |
+| **Chạy song song trên nhiều CPU** | Không (trừ khi ánh xạ qua KLT) | Có thể thực hiện song song thật sự |
+| **Gọi hệ thống** | Nếu một ULT gọi hệ thống -> cả tiến trình bị chặn | Một luồng bị chặn không ảnh hưởng luồng khác |
+| **Ví dụ** | POSIX user threads, Green threads (Java cũ) | Windows threads, Linux pthreads (thực hiện dưới dạng KLT) |
 
