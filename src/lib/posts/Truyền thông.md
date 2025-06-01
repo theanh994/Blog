@@ -10,22 +10,19 @@ coverWidth: 16
 coverHeight: 9
 ---
 
-# BÀI TẬP 1 – TÌM HIỂU DỊCH VỤ TRUYỀN THÔNG ĐIỆP: RABBITMQ
+## BÀI TẬP 1 – TÌM HIỂU DỊCH VỤ TRUYỀN THÔNG ĐIỆP: RABBITMQ
 
----
 
-## Mô tả bài tập
+### Mô tả bài tập
 > Tìm hiểu cơ chế, chức năng và cài đặt một trong các dịch vụ truyền thông điệp như RabbitMQ, Kafka, ActiveMQ, Redis Pub/Sub, Google Pub/Sub,... (Viết thành báo cáo)
 
----
 
-## Dịch vụ được chọn: **RabbitMQ**
+### Dịch vụ được chọn: **RabbitMQ**
 
 RabbitMQ là một message broker mã nguồn mở, sử dụng giao thức AMQP, hỗ trợ giao tiếp bất đồng bộ giữa các tiến trình trong hệ thống phân tán.
 
----
 
-## Kiến trúc tổng quan
+### Kiến trúc tổng quan
 
 RabbitMQ bao gồm các thành phần:
 
@@ -39,9 +36,7 @@ RabbitMQ bao gồm các thành phần:
 Producer --> Exchange --> Queue --> Consumer
 ```
 
----
-
-## Cơ chế hoạt động
+### Cơ chế hoạt động
 
 ### Các loại Exchange:
 - `Direct`: định tuyến theo khóa chính xác.
@@ -56,7 +51,7 @@ Quy trình:
 
 ---
 
-## Chức năng chính
+### Chức năng chính
 
 - Giao tiếp bất đồng bộ
 - Quản lý hàng đợi tin cậy (durable)
@@ -66,7 +61,7 @@ Quy trình:
 
 ---
 
-## Cài đặt RabbitMQ trêntrên Docker
+### Cài đặt RabbitMQ trêntrên Docker
 
 ### Bước 1: Tải image
 
@@ -109,18 +104,16 @@ RabbitMQ là một message broker mạnh mẽ và phổ biến, phù hợp với
 - [https://hub.docker.com/_/rabbitmq](https://hub.docker.com/_/rabbitmq)
 - [https://www.rabbitmq.com/tutorials/tutorial-one-python.html](https://www.rabbitmq.com/tutorials/tutorial-one-python.html)
 
-# BÀI TẬP 2 – CÀI ĐẶT HỆ THỐNG SỬ DỤNG RABBITMQ
+## BÀI TẬP 2 – CÀI ĐẶT HỆ THỐNG SỬ DỤNG RABBITMQ
 
----
 
-## Mục tiêu
+### Mục tiêu
 Xây dựng một hệ thống đơn giản mô phỏng mô hình **Producer–Consumer** sử dụng RabbitMQ:
 - **Producer** gửi thông điệp từ người dùng.
 - **Consumer** nhận và hiển thị thông điệp.
 
----
 
-## Công cụ và công nghệ
+### Công cụ và công nghệ
 
 | Thành phần     | Công nghệ sử dụng         |
 |----------------|---------------------------|
@@ -128,17 +121,16 @@ Xây dựng một hệ thống đơn giản mô phỏng mô hình **Producer–C
 | Ngôn ngữ        | Python 3                  |
 | Thư viện        | `pika` (RabbitMQ client) |
 
----
 
-## Bước 1: Cài đặt thư viện Python
+
+### Bước 1: Cài đặt thư viện Python
 
 ```bash
 pip install pika
 ```
 
----
 
-## Bước 2: Code producer (Gửi thông điệp)
+### Bước 2: Code producer (Gửi thông điệp)
 
 Tạo file `producer.py`:
 
@@ -158,7 +150,7 @@ connection.close()
 
 ---
 
-## Bước 3: Code consumer (Nhận thông điệp)
+### Bước 3: Code consumer (Nhận thông điệp)
 
 Tạo file `consumer.py`:
 
@@ -180,7 +172,7 @@ channel.start_consuming()
 
 ---
 
-## Bước 4: Chạy thử chương trình
+### Bước 4: Chạy thử chương trình
 
 1. Mở terminal và chạy `consumer.py`:
 ```bash
@@ -196,29 +188,29 @@ Nhập một thông điệp bất kỳ và xem kết quả ở cửa sổ consum
 
 ---
 
-## Kết quả mong đợi
+### Kết quả mong đợi
 
 - Gửi được thông điệp từ producer → queue RabbitMQ.
 - Consumer nhận và hiển thị thông điệp ngay lập tức.
 ![Mô phỏng kết quả](/images/ketqua-rabbitmq.png)
 
 ---
-# BÀI TẬP 3 – RPC SỬ DỤNG JSON-RPC VỚI PYTHON
+## BÀI TẬP 3 – RPC SỬ DỤNG JSON-RPC VỚI PYTHON
 
 ---
 
-## Mô tả bài tập
+### Mô tả bài tập
 > Tìm hiểu và triển khai một trong các thư viện RPC sử dụng định dạng JSON, bao gồm các bước cài đặt và viết mã mẫu cho server và client.
 
 ---
 
-## Dịch vụ được chọn: **JSON-RPC**
+### Dịch vụ được chọn: **JSON-RPC**
 
 **JSON-RPC** là một giao thức RPC nhẹ, sử dụng định dạng JSON để truyền tải thông điệp giữa client và server. JSON-RPC có thể được sử dụng để thực hiện các cuộc gọi thủ tục từ xa trong các hệ thống phân tán.
 
 ---
 
-## Kiến trúc tổng quan
+### Kiến trúc tổng quan
 
 Quy trình sử dụng JSON-RPC giữa client và server như sau:
 
@@ -229,9 +221,7 @@ Quy trình sử dụng JSON-RPC giữa client và server như sau:
 Client --> JSON-RPC Request --> Server --> JSON-RPC Response --> Client
 ```
 
----
-
-## Cơ chế hoạt động
+### Cơ chế hoạt động
 
 * **Method**: Phương thức được gọi từ client.
 * **Params**: Tham số cần thiết cho phương thức.
@@ -250,9 +240,8 @@ Ví dụ yêu cầu JSON-RPC:
 
 Server sẽ trả về kết quả dưới dạng JSON tương ứng.
 
----
 
-## Cài đặt thư viện `jsonrpclib-pelix`
+##@ Cài đặt thư viện `jsonrpclib-pelix`
 
 ### Bước 1: Cài đặt thư viện
 
@@ -292,7 +281,7 @@ print("Kết quả:", result)
 
 ---
 
-## Kiểm tra hoạt động
+### Kiểm tra hoạt động
 
 1. Chạy server:
 
@@ -312,15 +301,10 @@ Kết quả mong đợi:
 Kết quả: 7
 ```
 
----
-
-## Kết luận
-
 **JSON-RPC** là một giao thức nhẹ, đơn giản và hiệu quả cho các ứng dụng phân tán, với các thư viện Python như `jsonrpclib-pelix` giúp dễ dàng triển khai hệ thống RPC. Việc triển khai JSON-RPC giúp hệ thống giao tiếp linh hoạt và mở rộng được khả năng kết nối giữa các tiến trình và hệ thống.
 
----
 
-## Tài liệu tham khảo
+### Tài liệu tham khảo
 
 * [https://www.jsonrpc.org](https://www.jsonrpc.org)
 * [https://github.com/pelix-project/jsonrpclib-pelix](https://github.com/pelix-project/jsonrpclib-pelix)
