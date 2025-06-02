@@ -1,7 +1,7 @@
 ---
 title: "Ôn luyện thi cuối kỳ"
-date: "2025-04-28"
-updated: "2025-04-28"
+date: "2025-06-01"
+updated: "2025-06-01"
 categories:
     - "Hệ thống phân tán"
     - "Distributed Systems"
@@ -32,7 +32,6 @@ Là hệ thống mà mọi xử lý và quản lý dữ liệu đều được t
 
 * Hệ thống máy chủ nội bộ quản lý nhân sự trong doanh nghiệp nhỏ.
 * Máy chủ xác thực đăng nhập duy nhất của một website.
-
 
 ### 2. Hệ thống phi tập trung (Decentralized System)
 
@@ -97,17 +96,6 @@ Là hệ thống gồm nhiều máy tính kết nối mạng, phối hợp với
    * Nếu có → Phân tán.
    * Nếu không → Phi tập trung.
 
----
-
-### 6. Tóm tắt
-
-| Loại hệ thống | Từ khóa chính      | Ví dụ dễ hiểu                 |
-| ------------- | ------------------ | ----------------------------- |
-| Tập trung     | Máy chủ trung tâm  | Hệ thống nhân sự nội bộ       |
-| Phi tập trung | Nhiều điểm đồng bộ | Mạng lưới chi nhánh ngân hàng |
-| Phân tán      | Phối hợp qua mạng  | Google, Blockchain, AWS       |
-
-
 ## Câu 2: Các đặc tính của hệ phân tán là gì? 
 
 Hệ thống phân tán là tập hợp các máy tính độc lập, được kết nối với nhau qua mạng và phối hợp để thực hiện các nhiệm vụ chung. 
@@ -134,8 +122,6 @@ Hệ thống phân tán là tập hợp các máy tính độc lập, được k
   - Thứ lỗi: Che giấu lỗi và phục hồi
   - Bền vững: Giấu thông tin lưu trữ trên RAM hay đĩa
 
----
-
 ### 3. Tính mở (Openness)
 
 - Cho phép tích hợp các thành phần từ nhiều nhà sản xuất khác nhau.
@@ -144,8 +130,6 @@ Hệ thống phân tán là tập hợp các máy tính độc lập, được k
   - Tính khả chuyển (Portability)
   - Khả năng phối hợp (Interoperability)
   - Tính mở rộng và mềm dẻo
-
----
 
 ### 4. Tính co giãn (Scalability)
 
@@ -156,8 +140,6 @@ Hệ thống phân tán là tập hợp các máy tính độc lập, được k
 - So sánh:
   - Mô hình tập trung dễ nghẽn cổ chai
   - Mô hình phân tán phức tạp hơn nhưng mở rộng tốt hơn
-
----
 
 ### 5. Các nguyên lý nền tảng kỹ thuật
 
@@ -223,7 +205,7 @@ Thiết kế phi tập trung: Không có nút chủ rõ ràng, mọi nút đều
 
 ## Câu 4: Trong một mạng không gian, tại sao các máy thường giao tiếp với nhau qua gossip protocol mà không gửi thông tin đến tất cả các máy khác hoặc gửi về một nút trung tâm
 
-1. Vấn đề của việc gửi thông tin đến tất cả các máy hoặc về một nút trung ttâm
+1. Vấn đề của việc gửi thông tin đến tất cả các máy hoặc về một nút trung tâm
 Trong một hệ thống phân tán lớn, nếu một nút cố gắng:
 
 Gửi thông tin đến tất cả các máy khác (broadcast), hoặc
@@ -634,8 +616,6 @@ Trong hệ điều hành, **luồng (thread)** có thể được triển khai t
 
 **RPC (Remote Procedure Call)** là cơ chế cho phép một tiến trình (client) gọi thực thi một thủ tục (procedure) nằm trên một máy khác (server) như thể nó gọi một hàm cục bộ.
 
----
-
 ### Các hàm chính trong RPC:
 
 | Hàm | Vai trò | Mô tả chức năng |
@@ -647,8 +627,6 @@ Trong hệ điều hành, **luồng (thread)** có thể được triển khai t
 | **Binding Function** | Thiết lập liên kết | Dùng để kết nối client với server (có thể là tĩnh hoặc động) để biết được vị trí và thông tin máy chủ. |
 | **Marshalling / Unmarshalling** | Đóng gói / Giải mã dữ liệu | Biến các tham số thành định dạng có thể truyền qua mạng và ngược lại. |
 | **Transport Protocol** | Truyền thông | Giao thức như TCP hoặc UDP được sử dụng để truyền dữ liệu giữa client và server. |
-
----
 
 ### Tổng quan quá trình RPC:
 
@@ -783,11 +761,9 @@ Thông qua **Hypervisor**, nhiều hệ thống ảo có thể cùng chia sẻ m
 
 ## Câu 21: Kiến Trúc Server Đa Luồng
 
-
 ### Server đa luồng là:
 
 Server đa luồng (**Multithreaded Server**) là mô hình trong đó mỗi yêu cầu của client được xử lý bởi một luồng riêng biệt. Mô hình này giúp server có thể xử lý **nhiều kết nối đồng thời**, cải thiện khả năng phản hồi và hiệu suất hệ thống.
-
 
 ### Các Kiến Trúc Server Đa Luồng Phổ Biến
 
@@ -804,7 +780,6 @@ Server đa luồng (**Multithreaded Server**) là mô hình trong đó mỗi yê
 - Tốn nhiều tài nguyên (mỗi kết nối là một thread).
 - Không hiệu quả với hàng ngàn kết nối (vì context switching và chi phí tạo thread cao).
 
-
 ### 2. **Thread Pool (Bể luồng)**
 
 - Một nhóm cố định các luồng được tạo sẵn.
@@ -817,7 +792,6 @@ Server đa luồng (**Multithreaded Server**) là mô hình trong đó mỗi yê
 **Nhược điểm:**
 - Nếu tất cả thread đều bận, client phải chờ.
 - Cần thiết kế hàng đợi yêu cầu hợp lý.
-
 
 ### 3. **Asynchronous + Threaded Hybrid**
 
@@ -832,7 +806,6 @@ Server đa luồng (**Multithreaded Server**) là mô hình trong đó mỗi yê
 - Cấu trúc phức tạp, khó debug.
 - Cần quản lý thread và event loop đồng thời.
 
-
 ### 4. **Reactor Pattern (Một luồng chính điều phối + đa luồng xử lý)**
 
 - Một luồng chính lắng nghe sự kiện I/O (socket ready/read/write).
@@ -844,16 +817,6 @@ Server đa luồng (**Multithreaded Server**) là mô hình trong đó mỗi yê
 
 **Nhược điểm:**
 - Cần quản lý đồng bộ giữa thread chính và các thread worker.
-
-
-### So Sánh Tóm Tắt
-
-| Mô hình | Ưu điểm | Nhược điểm |
-|--------|----------|-------------|
-| Thread per connection | Dễ cài đặt, phản hồi tốt | Tốn tài nguyên, không mở rộng tốt |
-| Thread pool | Kiểm soát tốt tài nguyên | Có thể nghẽn nếu hết thread |
-| Async + Threaded | Tối ưu cả I/O và CPU | Phức tạp khi triển khai |
-| Reactor pattern | Hiệu quả, mở rộng tốt | Cần điều phối và đồng bộ phức tạp |
 
 ## Câu 22: Các Hướng Tiếp Cận Cài Đặt Luồng (Threading Approaches)
 
@@ -872,7 +835,6 @@ Server đa luồng (**Multithreaded Server**) là mô hình trong đó mỗi yê
 - Chi phí chuyển đổi ngữ cảnh cao hơn (context switching).
 - Tạo/destroy thread tốn nhiều tài nguyên hơn.
 
-
 ### 2. User-Level Threads (Luồng cấp người dùng)
 
 ### Đặc điểm:
@@ -886,7 +848,6 @@ Server đa luồng (**Multithreaded Server**) là mô hình trong đó mỗi yê
 ### Nhược điểm:
 - Một luồng bị block thì **toàn bộ process** cũng bị block.
 - Không tận dụng được đa lõi CPU hiệu quả.
-
 
 ### 3. Hybrid Threads (Mô hình kết hợp)
 
@@ -902,17 +863,7 @@ Server đa luồng (**Multithreaded Server**) là mô hình trong đó mỗi yê
 - Thiết kế và quản lý phức tạp.
 - Phải đồng bộ trạng thái giữa user và kernel thread.
 
-
-### Tổng kết So Sánh
-
-| Mô hình | Quản lý bởi | Ưu điểm | Nhược điểm |
-|--------|-------------|----------|-------------|
-| **Kernel-Level** | Hệ điều hành | Tận dụng đa lõi, quản lý tốt blocking | Tốn tài nguyên, chậm |
-| **User-Level**   | Thư viện người dùng | Nhanh, nhẹ | Không tận dụng đa lõi, blocking ảnh hưởng toàn bộ |
-| **Hybrid**       | Cả 2 | Linh hoạt, hiệu quả hơn | Phức tạp khi triển khai |
-
 ## Câu 23: Review Bảng Băm Phân Tán, Consistent Hashing và Finger Table
-
 
 ### 1. Tại sao sử dụng bảng băm phân tán?
 
@@ -962,16 +913,16 @@ Server đa luồng (**Multithreaded Server**) là mô hình trong đó mỗi yê
 
 ## Câu 24: Review: Không gian phẳng, Định danh và đặc điểm của không gian phẳng
 
-
 ### 1. Không gian phẳng (Metric Space) là gì?
 
-- Là một tập hợp \( M \) kèm theo một hàm khoảng cách (metric) \( d : M \times M \to \mathbb{R} \) thỏa mãn các tính chất:
-  - \( d(x, y) \geq 0 \) (khoảng cách không âm)
-  - \( d(x, y) = 0 \) khi và chỉ khi \( x = y \)
-  - \( d(x, y) = d(y, x) \) (tính đối xứng)
-  - \( d(x, z) \leq d(x, y) + d(y, z) \) (bất đẳng thức tam giác)
+Là một tập hợp `M` kèm theo một hàm khoảng cách (metric) `d : M × M → ℝ` thỏa mãn các tính chất:
 
-- Mô tả sự "cách biệt" giữa các điểm trong tập \( M \).
+- `d(x, y) ≥ 0` (khoảng cách không âm)
+- `d(x, y) = 0` khi và chỉ khi `x = y`
+- `d(x, y) = d(y, x)` (tính đối xứng)
+- `d(x, z) ≤ d(x, y) + d(y, z)` (bất đẳng thức tam giác)
+
+Metric mô tả sự "cách biệt" giữa các điểm trong tập `M`.
 
 ### 2. Định danh (Identifier) là gì?
 
@@ -989,7 +940,6 @@ Server đa luồng (**Multithreaded Server**) là mô hình trong đó mỗi yê
 - **Phù hợp cho đo lường và phân tích:** Dùng trong việc định nghĩa các khái niệm như lân cận, liên thông, cụm,...
 
 ## Câu 25: Đồng bộ hóa đồng hồ trong hệ phân tán
-
 
 ### 1. Tại sao cần đồng bộ hóa đồng hồ logic?
 
@@ -1040,7 +990,6 @@ Server đa luồng (**Multithreaded Server**) là mô hình trong đó mỗi yê
 
 ## Câu 26: Đồng hồ Lamport
 
-
 ### 1. Đồng hồ Lamport giải quyết vấn đề gì?
 
 - Trong hệ phân tán, không có đồng hồ vật lý đồng bộ tuyệt đối, nên khó xác định thứ tự tuyệt đối các sự kiện.
@@ -1083,61 +1032,78 @@ Giả sử mỗi tiến trình \( P_i \) có một bộ đếm đồng hồ logi
 ## Câu 27:
 ## Câu 28: Giao thức đồng bộ thời gian NTP và PTP
 
-
 ### 1. NTP (Network Time Protocol) là gì?
 
 - NTP là giao thức dùng để **đồng bộ hóa đồng hồ hệ thống** trên các máy tính qua mạng IP.
-- Mục đích: Đảm bảo các nút trong mạng có cùng chuẩn thời gian chính xác.
+- **Mục đích**: Đảm bảo các nút trong mạng có cùng chuẩn thời gian chính xác.
 - NTP sử dụng mô hình phân cấp server-client (stratum) để truyền thời gian chuẩn từ server cấp cao đến các client.
 
-### Cách tính toán thời gian trong NTP
+#### Cách tính toán thời gian trong NTP
 
-- NTP sử dụng 4 mốc thời gian (timestamps) trong quá trình đồng bộ:
+NTP sử dụng 4 mốc thời gian (timestamps) trong quá trình đồng bộ:
 
-| Mốc thời gian          | Ý nghĩa                         |
-|-----------------------|---------------------------------|
-| \( T_1 \)             | Thời gian client gửi yêu cầu    |
-| \( T_2 \)             | Thời gian server nhận yêu cầu   |
-| \( T_3 \)             | Thời gian server gửi phản hồi   |
-| \( T_4 \)             | Thời gian client nhận phản hồi  |
+| Mốc thời gian | Ý nghĩa                        |
+|---------------|--------------------------------|
+| `T1`          | Thời gian client gửi yêu cầu   |
+| `T2`          | Thời gian server nhận yêu cầu  |
+| `T3`          | Thời gian server gửi phản hồi  |
+| `T4`          | Thời gian client nhận phản hồi |
 
-- Tính **độ trễ (delay)**:
-  \[
-  \text{delay} = (T_4 - T_1) - (T_3 - T_2)
-  \]
+Công thức tính **độ trễ (delay)**:
+```
+delay = (T4 - T1) - (T3 - T2)
+```
 
-- Tính **độ lệch (offset)** giữa đồng hồ client và server:
-  \[
-  \text{offset} = \frac{(T_2 - T_1) + (T_3 - T_4)}{2}
-  \]
+Công thức tính **độ lệch (offset)** giữa đồng hồ client và server:
+```
+offset = [(T2 - T1) + (T3 - T4)] / 2
+```
 
-- Client điều chỉnh đồng hồ của mình dựa trên offset, giảm sai số thời gian.
+Client sẽ điều chỉnh đồng hồ của mình dựa vào `offset` nhằm giảm sai số thời gian.
 
+---
 
 ### 2. PTP (Precision Time Protocol) là gì?
 
-- PTP là giao thức đồng bộ thời gian chính xác cao được chuẩn hóa trong IEEE 1588.
-- Dùng nhiều trong các hệ thống yêu cầu độ chính xác cực kỳ cao (ví dụ: mạng công nghiệp, viễn thông, tài chính).
-- PTP hoạt động qua việc gửi các thông điệp đồng bộ và điều chỉnh thời gian trên các thiết bị trong mạng.
+- PTP là giao thức đồng bộ thời gian chính xác cao, được chuẩn hóa theo **IEEE 1588**.
+- Được sử dụng trong các hệ thống yêu cầu độ chính xác cực kỳ cao như **mạng công nghiệp, viễn thông, tài chính**.
+- PTP hoạt động bằng cách gửi các thông điệp đồng bộ và sử dụng timestamp để điều chỉnh thời gian trên các thiết bị trong mạng.
 
-### Cách tính toán trong PTP
+#### Cách tính toán trong PTP
 
-- PTP cũng sử dụng 4 mốc thời gian tương tự NTP (\( T_1, T_2, T_3, T_4 \)) để tính toán delay và offset.
-- Thời gian delay và offset được tính toán giống NTP:
-  \[
-  \text{delay} = (T_4 - T_1) - (T_3 - T_2)
-  \]
-  \[
-  \text{offset} = \frac{(T_2 - T_1) + (T_3 - T_4)}{2}
-  \]
-- Điểm khác biệt là PTP thường chạy trên mạng LAN, hỗ trợ phần cứng timestamping để tăng độ chính xác.
+PTP cũng sử dụng 4 mốc thời gian tương tự như NTP:
 
+| Mốc thời gian | Ý nghĩa                        |
+|---------------|--------------------------------|
+| `T1`          | Master gửi Sync                |
+| `T2`          | Slave nhận Sync                |
+| `T3`          | Slave gửi Delay_Req            |
+| `T4`          | Master nhận Delay_Req          |
+
+Tính toán delay và offset giống với NTP:
+
+```
+delay = (T4 - T1) - (T3 - T2)
+offset = [(T2 - T1) + (T3 - T4)] / 2
+```
+
+Điểm khác biệt chính là **PTP hỗ trợ timestamp phần cứng**, cho phép đo chính xác đến **nano giây**, và thường chạy trong mạng **LAN** chuyên biệt.
+
+---
 
 ### 3. So sánh NTP và PTP
 
-| Tiêu chí          | NTP                         | PTP                            |
-|-------------------|-----------------------------|--------------------------------|
-| Độ chính xác       | Khoảng vài ms               | Từ nanosecond đến microsecond  |
-| Môi trường sử dụng | Mạng Internet, WAN          | Mạng LAN, môi trường công nghiệp|
-| Cách timestamp    | Phần mềm                    | Hỗ trợ phần cứng               |
+| Tiêu chí          | NTP                          | PTP                                 |
+|-------------------|------------------------------|--------------------------------------|
+| **Độ chính xác**  | Vài mili giây (ms)           | Nano giây (ns) đến micro giây (μs)  |
+| **Môi trường**     | Internet, WAN                | LAN, công nghiệp, tài chính         |
+| **Timestamp**     | Phần mềm (software-based)    | Phần cứng (hardware-assisted)       |
+| **Chuẩn**         | Không thuộc IEEE             | IEEE 1588                           |
+| **Chi phí triển khai** | Thấp, dễ áp dụng         | Cao, cần thiết bị hỗ trợ            |
 
+---
+
+### Ghi chú thêm:
+
+- **NTP phù hợp với mạng chung, dễ triển khai nhưng độ chính xác không cao.**
+- **PTP yêu cầu hỗ trợ phần cứng nhưng độ chính xác rất cao, phù hợp với ứng dụng thời gian thực.**
