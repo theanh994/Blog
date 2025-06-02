@@ -16,7 +16,7 @@ excerpt: Bài tập Định danh.
 Bài tập 1
 ![Bài tập 1](/images/motvidu.jpg)
 
-Bìa tập 2
+Bài tập 2
     ### BÁO CÁO: THUẬT TOÁN CHORD
 
 
