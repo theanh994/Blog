@@ -11,14 +11,14 @@ coverHeight: 9
 excerpt: 
 
 ---
-## Báo cáo nội dung triển khai có trong hệ thống Facebook-clone cócó sử dụng sơ sở dữ liệu Apache HBase
+## Báo cáo nội dung triển khai có trong hệ thống Facebook-clone có sử dụng sơ sở dữ liệu Apache HBase
 
 ## Hiểu Về Kiến Trúc Hệ Thống Của Trang Web
 
 Trong bài viết này, chúng em sẽ cung cấp một báo cáo phân tích chi tiết về hệ thống web mà chúng em đã thiết kế, tập trung vào từng thành phần chính (tài nguyên media, giao diện tĩnh, hệ thống xây dựng, máy chủ web/CDN, dịch vụ API Python, cơ sở dữ liệu Apache HBase, và trình duyệt người dùng cuối). Đồng thời sẽ giải thích vai trò của từng thành phần, cách chúng tương tác với nhau, bao gồm các giao thức giao tiếp, thuật toán sharding/replication (nếu áp dụng), và cách chúng được triển khai trong thực tế. Ngoài ra, báo cáo sẽ liệt kê các công nghệ và thư viện sử dụng (bao gồm Apache HBase, Docker, Node.js, Python, CDN, HTML/CSS/JS), kèm theo lý do lựa chọn chi tiết và cách tích hợp chúng vào hệ thống. 
 
 Sơ đồ kiến trúc hệ thống
-![Sơ đồ kiến trúc hệ thống](images/diagram.png)
+![Sơ đồ kiến trúc hệ thống](/images/diagram.png)
 
 ### Các Thành Phần Hệ Thống và Vai Trò của Chúng
 #### 1. Tài Nguyên Media (Media Assets)
@@ -33,7 +33,6 @@ Khi trình duyệt người dùng cuối gửi yêu cầu HTTP GET (ví dụ: GE
 CDN có thể nén hoặc tối ưu hóa các tệp này (ví dụ: sử dụng WebP thay cho JPEG) để tăng tốc độ tải.
 
 Giao thức giao tiếp: Sử dụng giao thức HTTP/HTTPS, thường với phương thức GET để tải tài nguyên.
-
 
 #### 2. Giao Diện Tĩnh (Static Frontend)
 
@@ -91,7 +90,11 @@ Vai trò: Xử lý yêu cầu động (như lấy dữ liệu người dùng, l�
 Cách hoạt động:
 Khi nhận yêu cầu HTTP POST/GET từ máy chủ web/CDN (ví dụ: POST /api/userdata), API phân tích yêu cầu (thông qua header và body).
 API truy vấn HBase để lấy dữ liệu (ví dụ: row key là user123, trả về lịch sử xem video).
-Phản hồi được gửi lại dưới dạng JSON (ví dụ: {"user_id": "user123", "history": ["video1.mp4"]}) với mã trạng thái HTTP 200.
+Phản hồi được gửi lại dưới dạng JSON ví dụ: 
+```json
+{"user_id": "user123","history": ["video1.mp4"]}
+```
+ với mã trạng thái HTTP 200.
 
 Giao thức giao tiếp: Sử dụng HTTP/HTTPS với RESTful API (phương thức GET, POST, PUT, DELETE) để giao tiếp với máy chủ web/CDN, và giao thức HBase Thrift hoặc REST để kết nối với HBase.
 
@@ -164,7 +167,7 @@ Hệ thống này bao gồm các thành phần như tài nguyên media, giao di�
 
 ##### 1. Apache HBase (Cơ Sở Dữ Liệu Phân Tán)
 
-Mô tả: Apache HBase là một cơ sở dữ liệu NoSQL phân tán, mã nguồn mở, được xây dựng dựa trên Hadoop HDFS, hỗ trợ truy cập ngẫu nhiên và theo thời gian thực vào dữ liệu lớn.
+Apache HBase là một cơ sở dữ liệu NoSQL phân tán, mã nguồn mở, được xây dựng dựa trên Hadoop HDFS, hỗ trợ truy cập ngẫu nhiên và theo thời gian thực vào dữ liệu lớn.
 Lý do lựa chọn:
 Khả năng mở rộng: HBase được thiết kế để xử lý dữ liệu lớn (hàng petabyte) trên hàng nghìn máy chủ, phù hợp với hệ thống có khối lượng dữ liệu tăng trưởng nhanh, chẳng hạn như dữ liệu người dùng hoặc lịch sử truy cập trong ứng dụng web.
 Hiệu suất cao: HBase cho phép truy vấn nhanh dựa trên row key, lý tưởng cho các truy vấn thời gian thực như tra cứu thông tin người dùng hoặc lịch sử hoạt động.
@@ -218,11 +221,9 @@ Tiêu chuẩn web: Đây là bộ ba công nghệ cốt lõi để xây dựng g
 Hiệu suất: Các tệp tĩnh nhẹ và dễ tối ưu, giảm tải cho máy chủ.
 Ứng dụng cụ thể trong hệ thống: Các tệp này được biên dịch và đóng gói để phục vụ giao diện người dùng, chẳng hạn như hiển thị trang chủ và các tính năng tương tác.
 
-
 K vesty Tích Hợp Apache HBase Vào Hệ Thống
 Cách Tích Hợp Apache HBase
 
 Tích hợp với API Python: Dịch vụ API Python (api.py) có thể truy vấn dữ liệu từ HBase (ví dụ: thông tin người dùng, lịch sử truy cập) và trả về kết quả cho trình duyệt người dùng cuối thông qua máy chủ web/CDN.
 Lưu trữ dữ liệu động: HBase sẽ lưu trữ các dữ liệu không cần schema cố định, chẳng hạn như lịch sử truy cập media hoặc thông tin phiên người dùng.
 Tích hợp với Hadoop: Nếu cần phân tích dữ liệu lớn (ví dụ: thống kê lượt xem video), HBase có thể hoạt động cùng MapReduce để xử lý dữ liệu hiệu quả.
-
